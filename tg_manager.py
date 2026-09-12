@@ -7,7 +7,7 @@ import subprocess
 import requests
 
 BOT_TOKEN = "8972471605:AAE7hhT8QO5N_hnfHTIX1PxRzmkRBm5voyY"
-CHAT_ID = "6955911349"
+CHAT_ID = "8972471605"
 BASE_DIR = "/root/mcpe-server"
 PROPERTIES_FILE = os.path.join(BASE_DIR, "server.properties")
 WORLDS_DIR = os.path.join(BASE_DIR, "worlds")
@@ -29,6 +29,10 @@ def send_document(file_path, caption=""):
 
 def run_cmd(cmd):
     return subprocess.run(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+
+def send_to_console(mc_cmd):
+    cmd = f'screen -S mcpe -X stuff "{mc_cmd}^M"'
+    run_cmd(cmd)
 
 def stop_server():
     run_cmd("screen -S mcpe -X quit")
@@ -90,7 +94,7 @@ def handle_document(doc):
 
 def handle_updates():
     offset = 0
-    send_message("Minecraft Server Bot Ready!\nCommands:\n/status\n/backup\n/seed <seed>\n/restart\n/stopserver\n/startserver\n\nDirect world .zip file bhej kar restore kar sakte hain.")
+    send_message("Minecraft Server Bot Ready!\nCommands:\n/op <player_name> - Give Admin/OP\n/coords - Turn ON Coordinates\n/cmd <command> - Run Minecraft Command\n/status - Server & Tunnel Status\n/backup - Download World Backup\n/seed <seed> - Generate New Seed World\n/restart - Restart Server\n/stopserver / /startserver\n\nDirect world .zip file send karke restore karein!")
     
     while True:
         try:
@@ -122,6 +126,20 @@ def handle_updates():
                     playit = "ONLINE" if "playit-tunnel" in out else "OFFLINE"
                     send_message(f"Server Status:\nMinecraft: {status}\nPlayit: {playit}")
                     
+                elif text.startswith("/op "):
+                    player = text.split(" ", 1)[1].strip()
+                    send_to_console(f'op "{player}"')
+                    send_message(f"OP permission command sent for: {player}")
+
+                elif text == "/coords":
+                    send_to_console("gamerule showcoordinates true")
+                    send_message("Coordinates turned ON (gamerule showcoordinates true)!")
+
+                elif text.startswith("/cmd "):
+                    mc_cmd = text.split(" ", 1)[1].strip()
+                    send_to_console(mc_cmd)
+                    send_message(f"Executed command: {mc_cmd}")
+
                 elif text == "/backup":
                     send_message("Backup zip create ho raha hai...")
                     backup_zip = os.path.join(BASE_DIR, "world_backup.zip")
