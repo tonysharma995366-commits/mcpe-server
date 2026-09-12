@@ -7,7 +7,7 @@ import subprocess
 import requests
 
 BOT_TOKEN = "8972471605:AAE7hhT8QO5N_hnfHTIX1PxRzmkRBm5voyY"
-CHAT_ID = "8972471605"
+CHAT_ID = "6955911349"
 BASE_DIR = "/root/mcpe-server"
 PROPERTIES_FILE = os.path.join(BASE_DIR, "server.properties")
 WORLDS_DIR = os.path.join(BASE_DIR, "worlds")
