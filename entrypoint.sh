@@ -7,7 +7,7 @@ websockify -D --web=/usr/share/novnc/ --cert=/root/self.pem 6080 localhost:5901
 
 # Minecraft & Playit Automation
 BOT_TOKEN="8972471605:AAE7hhT8QO5N_hnfHTIX1PxRzmkRBm5voyY"
-CHAT_ID="8972471605"
+CHAT_ID="6955911349"
 SERVER_DIR="/root/mcpe-server"
 
 send_tg() {
@@ -79,19 +79,19 @@ Claim karne ke baad is bot ko 'done' likhkar bhejein."
     unzip -o -q bedrock-server.zip
     chmod +x bedrock_server
 
-    # Settings: Cheats ON, Operator Permission by default, Whitelist OFF
+    # Base settings: Cheats ON, Operator permissions default, Whitelist OFF
     sed -i 's/allow-list=true/allow-list=false/g' server.properties
     sed -i 's/white-list=true/white-list=false/g' server.properties
     sed -i 's/allow-cheats=false/allow-cheats=true/g' server.properties
     sed -i 's/default-player-permission-level=member/default-player-permission-level=operator/g' server.properties
 
-    # Start all 3 screen sessions
+    # Start all background sessions
     screen -dmS playit-tunnel /usr/local/bin/playit-cli
     screen -dmS mcpe bash -c "LD_LIBRARY_PATH=. ./bedrock_server"
     screen -dmS tg-bot python3 /root/tg_manager.py
 
-    send_tg "Minecraft Bedrock Server & Telegram Manager active ho chuke hain! In-game coordinates on karne ke liye /coords bhejein ya /op <username> use karein."
+    send_tg "Minecraft Bedrock Server aur Full-Control Bot active ho chuke hain! Type /help sabhi commands dekhne ke liye."
 ) &
 
-# Keep container alive
+# Keep container running
 tail -f /dev/null
