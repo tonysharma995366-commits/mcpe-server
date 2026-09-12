@@ -2,7 +2,7 @@ FROM --platform=linux/amd64 ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Essential packages, lightweight desktop environment, and management dependencies
+# Essential packages, lightweight desktop environment, and runtime dependencies
 RUN apt update -y && apt install --no-install-recommends -y \
     xfce4 tigervnc-standalone-server novnc websockify \
     sudo xterm curl wget git tzdata \
