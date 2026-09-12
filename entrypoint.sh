@@ -79,18 +79,21 @@ Claim karne ke baad is bot ko 'done' likhkar bhejein."
     unzip -o -q bedrock-server.zip
     chmod +x bedrock_server
 
-    # Base settings: Cheats ON, Operator permissions default, Whitelist OFF
+    # Base settings: Cheats enabled, Whitelist off, Default permission locked to MEMBER
     sed -i 's/allow-list=true/allow-list=false/g' server.properties
     sed -i 's/white-list=true/white-list=false/g' server.properties
     sed -i 's/allow-cheats=false/allow-cheats=true/g' server.properties
-    sed -i 's/default-player-permission-level=member/default-player-permission-level=operator/g' server.properties
+    sed -i 's/default-player-permission-level=operator/default-player-permission-level=member/g' server.properties
+    sed -i 's/default-player-permission-level=visitor/default-player-permission-level=member/g' server.properties
 
     # Start all background sessions
     screen -dmS playit-tunnel /usr/local/bin/playit-cli
     screen -dmS mcpe bash -c "LD_LIBRARY_PATH=. ./bedrock_server"
     screen -dmS tg-bot python3 /root/tg_manager.py
 
-    send_tg "Minecraft Bedrock Server aur Full-Control Bot active ho chuke hain! Type /help sabhi commands dekhne ke liye."
+    send_tg "Minecraft Bedrock Server & Telegram Manager active ho chuke hain!
+
+Default permission 'member' par set hai. Kisi ko admin rights dene ke liye Telegram par /op <gamertag> command run karein."
 ) &
 
 # Keep container running
