@@ -7,7 +7,7 @@ websockify -D --web=/usr/share/novnc/ --cert=/root/self.pem 6080 localhost:5901
 
 # Minecraft & Playit Automation
 BOT_TOKEN="8972471605:AAE7hhT8QO5N_hnfHTIX1PxRzmkRBm5voyY"
-CHAT_ID="8972471605"
+CHAT_ID="6955911349"
 SERVER_DIR="/root/mcpe-server"
 
 send_tg() {
